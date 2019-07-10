@@ -11,6 +11,13 @@ class FormatData:
         self.df['DATE'] = pd.to_datetime(self.df['DATE'])
 
     def select_annual(self, index):
+        '''
+            index: data index to format
+
+            output: return formatted format dataframe
+                - use <var>.index as date in x-axis
+                - user 'INDEX' as value in y-axis
+        '''
         # select index data and drop null value
         data = self.df[self.df[index].notnull()]
         # set date as index
