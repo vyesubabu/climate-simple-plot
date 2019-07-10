@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib.dates as mdates
+from FormatData import FormatData as FD
 
 sns.set(style="whitegrid")
 sns.set_context(font_scale=1.5)
@@ -10,20 +11,8 @@ sns.set_context(font_scale=1.5)
 data_file = './data/2000-2019.csv'
 station = 'NAKHON SAWAN, TH'
 
-df = pd.read_csv(data_file)
-df = df[df['NAME'] == station]
-df['DATE'] = pd.to_datetime(df['DATE'])
-
-
-# drop prcp = null/nan
-prcp_data = df[df['PRCP'].notnull()]
-
-# set date as index
-prcp_data.index = prcp_data['DATE']
-
-# group prcp data by month, and drop null data
-annual_prcp = prcp_data.resample('M').mean()
-annual_prcp = annual_prcp[annual_prcp['PRCP'].notnull()]
+df = FD(data_file, station)
+annual_data = df.select_annual('PRCP')
 
 
 years = mdates.YearLocator()
@@ -31,7 +20,7 @@ months = mdates.MonthLocator()
 years_fmt = mdates.DateFormatter('%Y-%m')
 
 fig, ax = plt.subplots()
-ax.plot(annual_prcp.index, 'PRCP', 'b.', data=annual_prcp)
+ax.plot(annual_data.index, 'PRCP', 'b.', data=annual_data)
 
 ax.xaxis.set_major_locator(years)
 ax.xaxis.set_major_formatter(years_fmt)
