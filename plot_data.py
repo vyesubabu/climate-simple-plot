@@ -27,13 +27,28 @@ def annual_plot(data, index):
     ax.grid(True)
     plt.show()
 
+def monthly_plot(data, index):
+    fig, ax = plt.subplots()
+    ax.plot(data.index, index, data=data)
+    plt.xticks(rotation=45)
+    ax.grid(True)
+    plt.show()
+
+
 def histplot(data, index):
     sns.distplot(data[index], kde=False)
     plt.show()
 
 
-index = 'PRCP'
-annual_data = df.select_annual(index)
-annual_plot(annual_data, index)
 
-histplot(annual_data, index)
+# index = 'PRCP'
+# annual_data = df.select_annual(index)
+# annual_plot(annual_data, index)
+# histplot(annual_data, index)
+
+
+index = 'TMAX'
+month_data = df.select_month(index, 2001, 4)
+month_data[index] = (month_data[index]-32)*5/9
+# histplot(month_data, index)
+monthly_plot(month_data, index)

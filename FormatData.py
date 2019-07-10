@@ -10,6 +10,7 @@ class FormatData:
         # format date column
         self.df['DATE'] = pd.to_datetime(self.df['DATE'])
 
+
     def select_annual(self, index):
         '''
             index: data index to format
