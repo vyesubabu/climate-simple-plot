@@ -27,6 +27,14 @@ class FormatData:
         annual_data = annual_data[annual_data[index].notnull()]
 
         return annual_data
+    
+    def select_month(self, index, year, month):
+        data = self.df.loc[(self.df['DATE'].dt.month == month) & (self.df['DATE'].dt.year == year)]
+        data = data[data[index].notnull()]
+        data.index = data['DATE']
+
+        return data
+
 
 if __name__ == "__main__":
     data_file = './data/2000-2019.csv'
