@@ -44,15 +44,36 @@ def histplot(data, index):
     plt.show()
 
 
+to_celcius = lambda x: (x-32)*5/9
 
-index = 'PRCP'
+index = 'TAVG'
 annual_data = df.select_annual(index)
+annual_data[index] = to_celcius(annual_data[index])
 annual_plot(annual_data, index)
 histplot(annual_data, index)
-
+mean = np.mean(annual_data[index])
+max_ = np.amax(annual_data[index])
+min_ = np.amin(annual_data[index])
+var = annual_data[index].var()
+print('------------------------------')
+print(f'Mean: {mean}')
+print(f'Max: {max_}')
+print(f'Min: {min_}')
+print(f'Variance: {var}')
+print('------------------------------')
 
 index = 'TMAX'
 month_data = df.select_month(index, 2001, 4)
-month_data[index] = (month_data[index]-32)*5/9
-histplot(month_data, index)
+month_data[index] = to_celcius(month_data[index])
 monthly_plot(month_data, index)
+histplot(month_data, index)
+mean = np.mean(month_data[index])
+max_ = np.amax(month_data[index])
+min_ = np.amin(month_data[index])
+var = month_data[index].var()
+print('------------------------------')
+print(f'Mean: {mean}')
+print(f'Max: {max_}')
+print(f'Min: {min_}')
+print(f'Variance: {var}')
+print('------------------------------')
