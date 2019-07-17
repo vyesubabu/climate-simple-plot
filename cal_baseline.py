@@ -24,4 +24,4 @@ df = pd.DataFrame({
 
 print(df)
 
-df.to_csv('./data/base_nakhon_sawan.csv', index=False, sep=',')
+df.to_csv('./data/baseline_nakhon_sawan.csv', index=False, sep=',')
