@@ -19,7 +19,9 @@ annual_mean = df2.resample('M').mean()
 before = annual_mean[annual_mean.index < '1985-01-31']
 after = annual_mean[annual_mean.index >= '1985-01-31']
 
-sns.distplot(before['TAVG'], label='1951-1984')
-sns.distplot(after['TAVG'], label='1985-2019')
+index = 'TMIN'
+
+sns.distplot(before[index], label='1951-1984')
+sns.distplot(after[index], label='1985-2019')
 plt.legend()
 plt.show()
