@@ -5,6 +5,8 @@ import seaborn as sns
 import pygal
 from datetime import datetime
 from sklearn.linear_model import LinearRegression
+from scipy.stats import norm
+
 sns.set_style("whitegrid")
 sns.set_palette("bright")
 sns.set_context('notebook', font_scale=1.25, rc={"lines.linewidth": 3})

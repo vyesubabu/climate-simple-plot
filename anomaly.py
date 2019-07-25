@@ -20,11 +20,14 @@ df1 = df.groupby(df['DATE'].dt.year)
 df1 = df1.mean()
 
 # select baseline 1961-1991
-baseline = df1[11:42].mean()
+start_year = 1961
+end_year = 1991
+mask = (df1.index >= start_year) & (df1.index <= end_year)
+baseline = df1.loc[mask].mean()
 print(f'baseline: \n{baseline}\n')
 
 index = 'PRCP'
-title = f'{index} Anomaly, baseline: 1961-1991'
+title = f'{index} Anomaly, baseline: {start_year}-{end_year}'
 
 anomaly = df1[index] - baseline[index]
 print(f'anomaly head: \n{anomaly.head()}\n')
