@@ -26,7 +26,7 @@ mask = (df1.index >= start_year) & (df1.index <= end_year)
 baseline = df1.loc[mask].mean()
 print(f'baseline: \n{baseline}\n')
 
-index = 'PRCP'
+index = 'TAVG'
 title = f'{index} Anomaly, baseline: {start_year}-{end_year}'
 
 anomaly = df1[index] - baseline[index]
