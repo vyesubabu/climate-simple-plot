@@ -40,3 +40,16 @@ plt.ylabel('Temperature')
 plt.xticks(list(range(1, 13)), month_list)
 plt.savefig('monthly-climatology.png', dpi=150)
 plt.show()
+
+print('before avg DTR')
+print(np.mean(before['TMAX'] - before['TMIN']))
+print('after avg DTR')
+print(np.mean(after['TMAX'] - after['TMIN']))
+
+
+sns.lineplot(x, before_m['PRCP'], label='PRCP 1951-1984')
+sns.lineplot(x, after_m['PRCP'], label='PRCP 1985-2019')
+plt.xlabel('Month')
+plt.ylabel('PRCP')
+plt.xticks(list(range(1, 13)), month_list)
+plt.show()
