@@ -31,9 +31,11 @@ baseline = baseline/(num_baseline_year*12)
 print(f'baseline shape: {baseline.shape}')
 
 # calculate mean of data
+interrest_y_st = 1980 - start_year
+interrest_y_en = 2010 - start_year
 data = 0
 for m in months:
-    data += np.nanmean(ds[m][:], axis=0)
+    data += np.nanmean(ds[m][interrest_y_st:interrest_y_en], axis=0)
 data = data/(12)
 print(f'data shape: {data.shape}')
 
@@ -53,7 +55,7 @@ lats = np.arange(-90, 92.5, 2.5)
 lons = np.arange(-180, 180, 2.5)
 anomaly = np.roll(anomaly, int(len(lons)/2), axis=1)
 
-graticule_res = 2.5
+graticule_res = 10
 parallels = np.arange(min(lats), max(lats)+1, graticule_res)
 meridians = np.arange(min(lons), max(lons)+1, graticule_res)
 m.drawparallels(parallels,
