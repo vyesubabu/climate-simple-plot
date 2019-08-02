@@ -33,8 +33,8 @@ print(f'baseline shape: {baseline.shape}')
 # calculate mean of data
 data = 0
 for m in months:
-    data += np.nansum(ds[m][:], axis=0)
-data = data/((end_year-start_year)*12)
+    data += np.nanmean(ds[m][:], axis=0)
+data = data/(12)
 print(f'data shape: {data.shape}')
 
 # calculate anomaly
@@ -45,11 +45,15 @@ print(f'anomaly shape: {anomaly.shape}')
 fig = plt.figure(figsize=(9, 5))
 m = Basemap(projection='cyl')
 lats = ds['lat']
+# lons in dataset is 0..360
 lons = ds['lon']
+
 # shifted lon
+lats = np.arange(-90, 92.5, 2.5)
 lons = np.arange(-180, 180, 2.5)
-shifted_lon = np.roll(lons, 72)
-graticule_res = 10
+anomaly = np.roll(anomaly, int(len(lons)/2), axis=1)
+
+graticule_res = 2.5
 parallels = np.arange(min(lats), max(lats)+1, graticule_res)
 meridians = np.arange(min(lons), max(lons)+1, graticule_res)
 m.drawparallels(parallels,
@@ -59,7 +63,7 @@ m.drawmeridians(meridians,
 m.drawcountries()
 m.drawcoastlines()
 
-x, y = m(*np.meshgrid(shifted_lon, lats))
+x, y = m(*np.meshgrid(lons, lats))
 color = m.pcolor(x, y, anomaly.squeeze(), cmap='RdYlBu_r')
 m.colorbar(color, location='bottom', pad='10%')
 plt.title('TNx Anomaly')
