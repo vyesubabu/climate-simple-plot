@@ -5,10 +5,12 @@ from netCDF4 import Dataset
 from mpl_toolkits.basemap import Basemap, shiftgrid
 
 df = pd.read_csv('./data/1951-2019.csv')
-stations = df[['NAME', 'LATITUDE', 'LONGITUDE']]
+stations = df[['NAME', 'LATITUDE', 'LONGITUDE']].drop_duplicates()
 
-stations_lat = stations['LATITUDE']
-stations_lon = stations['LONGITUDE']
+stations_lat = np.array(stations['LATITUDE'][:])
+stations_lon = np.array(stations['LONGITUDE'][:])
+stations_name = np.array(stations['NAME'][:])
+
 
 ds = Dataset('./data/T2m_pr_day_MPI-ESM-MR_historical.197001.nc')
 lats = ds['lat'][:]
@@ -47,6 +49,12 @@ sx, sy = m(stations_lon, stations_lat)
 color_map = 'RdYlBu_r'
 color = m.pcolor(x, y, data.squeeze(), cmap='RdYlBu_r',
                  edgecolors='k', linewidths=0.2)
-plt.scatter(sx, sy, 10, marker='o')
 m.colorbar(color, location='bottom', pad='10%')
+
+
+for i in range(len(sx)):
+    plt.scatter(sx[i], sy[i], 20, marker='o', label=stations_name[i])
+plt.legend()
+
+
 plt.show()
