@@ -14,7 +14,9 @@ for station_id in stations:
     station_name = station_name.split(', ')
     station_name = station_name[0].replace(
         ' ', '_') + '_' + station_name[1]
+    station_start_y = np.array(station_data['DATE'])[0][0:4]
+    station_end_y = np.array(station_data['DATE'])[-1][0:4]
     station_data.to_csv(
-        f'../station_data/{station_name}_1951-2019.csv', index=False)
-    print(cnt, station_name)
+        f'../station_data/{station_name}_{station_start_y}-{station_end_y}.csv', index=False)
+    print(cnt, station_name, station_start_y, station_end_y)
     cnt += 1
