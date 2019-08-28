@@ -48,13 +48,18 @@ x, y = m(*np.meshgrid(lons, lats))
 sx, sy = m(stations_lon, stations_lat)
 color_map = 'RdYlBu_r'
 color = m.pcolor(x, y, data.squeeze(), cmap='RdYlBu_r',
-                 edgecolors='k', linewidths=0.2)
+                 edgecolors='k', linewidths=0.2, alpha=0.5)
 m.colorbar(color, location='bottom', pad='10%')
 
 
 for i in range(len(sx)):
-    plt.scatter(sx[i], sy[i], 20, marker='o', label=stations_name[i])
+    plt.scatter(sx[i], sy[i], 20, marker='o')
+
+# plot interest station loc
+s_name = 'CHIANG MAI, TH'
+s = stations[stations['NAME'] == s_name]
+s_x, s_y = m(s['LONGITUDE'], s['LATITUDE'])
+plt.scatter(s_x, s_y, 50, marker='X', label=s_name)
+
 plt.legend()
-
-
 plt.show()
